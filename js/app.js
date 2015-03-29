@@ -113,10 +113,11 @@ Player.prototype.update = function() {
     //	Check that player stays on the canvas.
     //	Don't allow player past right
     if (this.x > ctx.canvas.width - this.width) {
-	    this.x = ctx.canvas.width - this.width;
+	    this.x = ctx.canvas.width - this.width
+		- this.sourceX;
     }
     // Don't allow player past left
-    if (this.x < 0) this.x = 0;
+    if (this.x < 0) this.x = 1 + this.sourceX;
     // Check to see if player wins! Makes it
     // to blue tile.
     if (this.y < (canvasOffset + tileHeight)) {
@@ -161,16 +162,24 @@ Player.prototype.centerY = function() {
 Player.prototype.handleInput = function(key) {
     switch (key) {
 	case "left":
-	    this.x = this.x - 101;
+	    if (gameOver == false) {
+		this.x = this.x - 101;
+	    }
 	    break;
 	case "right":
-	    this.x = this.x + 101;
+	    if (gameOver == false) {
+		this.x = this.x + 101;
+	    }
 	    break;
 	case "up":
-	    this.y = this.y - 83;
+	    if (gameOver == false) {
+		this.y = this.y - 83;
+	    }
 	    break;
 	case "down":
-	    this.y = this.y + 83;
+	    if (gameOver == false) {
+		this.y = this.y + 83;
+	    }
 	    break;
 	case "space":
 	    if (gameRunning == false) {
@@ -246,6 +255,7 @@ function newGame() {
 //  Position player centered at bottom in the grass
 //
     player.x = Math.round(505/2) - Math.round(player.width/2);
+    console.log("original pos ",player.x);
     player.y = 606 - player.height - canvasOffset;
 }
 /*
