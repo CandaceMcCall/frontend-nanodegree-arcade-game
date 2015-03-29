@@ -123,6 +123,8 @@ Player.prototype.update = function() {
     if (this.y < (canvasOffset + tileHeight)) {
 	playerWins = true;
 	gameOver = true;
+	newGame();
+	createEnemies();
     }
     // Check that player stays above
     if (this.y > ctx.canvas.height - this.height - canvasOffset) {
@@ -181,16 +183,16 @@ Player.prototype.handleInput = function(key) {
 		this.y = this.y + 83;
 	    }
 	    break;
-	case "space":
-	    if (gameRunning == false) {
-		createEnemies();
-		gameRunning = true;
-	    }
-	    if (gameOver == true) {
-		newGame();
-		createEnemies();
-	    }
-	    break;
+	//case "space":
+	    //if (gameRunning == false) {
+		//createEnemies();
+		//gameRunning = true;
+	    //}
+	    //if (gameOver == true) {
+		//newGame();
+		//createEnemies();
+	    //}
+	    //break;
     }
 }
 
@@ -204,7 +206,8 @@ function createEnemies() {
     //
     for (i = 1; i < 11; i++) {
 	var newEnemy = new Enemy();
-	newEnemy.x = getRandomInt(0,ctx.canvas.width - 
+	//newEnemy.x = getRandomInt(0,ctx.canvas.width - 
+	newEnemy.x = getRandomInt(0,505 - 
 	    newEnemy.width);
 	// Center enemy on stone tile.
 	newEnemy.y = canvasOffset + getRandomInt(1,4)*tileHeight
@@ -235,7 +238,9 @@ var playerWins = false;
 var allEnemies = [];
 var player = new Player();
 var score = 0;
+gameRunning = true;
 newGame();
+createEnemies();
 
 /*
  * Starts New Game

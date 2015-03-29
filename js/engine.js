@@ -155,10 +155,10 @@ var Engine = (function(global) {
             enemy.render();
         });
 
-	renderScore();
+	//renderScore();
         player.render();
-	if (gameRunning == false) renderStart();
-	if (gameOver == true) renderGameOver();
+	//if (gameRunning == false) renderStart();
+	//if (gameOver == true) renderGameOver();
     }
 
     /* 
@@ -223,6 +223,8 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
 	    if (checkCollisionEntity(enemy,player) == true) {
 		gameOver = true;
+		newGame();
+		createEnemies();
 	    }
         });
     }
