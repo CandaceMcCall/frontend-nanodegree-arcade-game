@@ -1,3 +1,4 @@
+"use strict";
 /*
  * Enemies our player must avoid
  *
@@ -45,7 +46,7 @@ Enemy.prototype.update = function(dt) {
     // let enemy appear on left side of canvas when it leaves
     // right side
     if (this.x > ctx.canvas.width) this.x = -this.width;
-}
+};
 
 /*
  * Draw the enemy on the screen, required method for game
@@ -56,7 +57,7 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.sourceX,
 	this.sourceY, this.sourceWidth, this.sourceHeight,
 	this.x, this.y, this.width, this.height);
-}
+};
 /*
  *
  * Get current center of enemy X position
@@ -65,7 +66,7 @@ Enemy.prototype.render = function() {
  */
 Enemy.prototype.centerX = function() {
     return (this.x + this.width/2);
-}
+};
 /*
  *
  * Get current center of enemy Y position
@@ -74,7 +75,7 @@ Enemy.prototype.centerX = function() {
  */
 Enemy.prototype.centerY = function() {
     return (this.y + this.height/2);
-}
+};
 /*
  * Now write your own player class
  * This class requires an update(), render() and
@@ -130,7 +131,7 @@ Player.prototype.update = function() {
     if (this.y > ctx.canvas.height - this.height - canvasOffset) {
 	this.y = ctx.canvas.height - this.height - canvasOffset;
     }
-}
+};
 /*
  * Draw the player on the screen, required method for game
  * Modified this from the original so we can have more
@@ -140,7 +141,7 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.sourceX,
 	this.sourceY, this.sourceWidth, this.sourceHeight,
 	this.x, this.y, this.width, this.height);
-}
+};
 /*
  * Get current center of player X position
  * Used in collision detection
@@ -148,7 +149,7 @@ Player.prototype.render = function() {
  */
 Player.prototype.centerX = function() {
     return (this.x + this.width/2);
-}
+};
 /*
  *
  * Get current center of player Y position
@@ -157,7 +158,7 @@ Player.prototype.centerX = function() {
  */
 Player.prototype.centerY = function() {
     return (this.y + this.height/2);
-}
+};
 /*
  * Handle Key Input
  */
@@ -194,7 +195,7 @@ Player.prototype.handleInput = function(key) {
 	    //}
 	    //break;
     }
-}
+};
 
 /*
  * Function to populate enemies array
@@ -204,7 +205,7 @@ function createEnemies() {
     // Create 10 enemies at varying velocities and
     // positions
     //
-    for (i = 1; i < 11; i++) {
+    for (var i = 1; i < 11; i++) {
 	var newEnemy = new Enemy();
 	//newEnemy.x = getRandomInt(0,ctx.canvas.width - 
 	newEnemy.x = getRandomInt(0,505 - 
