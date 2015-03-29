@@ -79,8 +79,13 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
     function update(dt) {
-        updateEntities(dt);
-        // checkCollisions();
+	// Stop play if game is over thus only updating if game in 
+	// progress
+	// 
+	if (gameOver == false) {
+	    updateEntities(dt);
+	    checkCollisions();
+	}
     }
 
     /* This is called by the update function  and loops through all of the
@@ -135,8 +140,6 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
         }
-
-
         renderEntities();
     }
 
@@ -152,7 +155,54 @@ var Engine = (function(global) {
             enemy.render();
         });
 
+	renderScore();
         player.render();
+	if (gameRunning == false) renderStart();
+	if (gameOver == true) renderGameOver();
+    }
+
+    /* 
+     * This function is called by the render function to display the start
+     * message to start game
+     */
+    function renderStart() {
+    	ctx.font = "40px sans-serif";
+    	ctx.textAlign = "center";
+    	ctx.fillStyle = "white";
+	ctx.fillText("Press Space Bar to Start",canvas.width/2,
+	    canvas.height/2);
+    }
+
+    /* 
+     * This function is called by the render function to display the game
+     * over message.  Tells user if they win or lose and to press
+     * spacebar to start new game
+     */
+    function renderGameOver() {
+    	ctx.font = "40px sans-serif";
+    	ctx.textAlign = "center";
+    	ctx.fillStyle = "white";
+	if (playerWins) {
+	    ctx.fillText("You Won!",canvas.width/2,canvas.height/4);
+	} 
+	else {
+	    ctx.fillText("Sorry, You Lost :(",canvas.width/2,canvas.height/4);
+	}
+	ctx.fillText("Press Space Bar to",canvas.width/2,canvas.height/2);
+	ctx.fillText("Start New Game",canvas.width/2,canvas.height*3/4);
+    }
+
+    /* 
+     * This function is called by the render function to display the score
+     * TODO:   Add jewels to game and update score if player collides with 
+     * jewel.
+     */
+    function renderScore() {
+    	ctx.font = "40px sans-serif";
+    	ctx.textAlign = "right";
+    	ctx.fillStyle = "white";
+	console.log(score);
+	ctx.fillText(score,canvas.width-50,100);
     }
 
     /* This function does nothing but it could have been a good place to
@@ -161,6 +211,47 @@ var Engine = (function(global) {
      */
     function reset() {
         // noop
+    }
+    /*
+     * Check collisions between entities
+     *
+     */
+    function checkCollisions() {
+	//
+	// For each enemy, see if it has collided with player
+	//
+        allEnemies.forEach(function(enemy) {
+	    if (checkCollisionEntity(enemy,player) == true) {
+		gameOver = true;
+	    }
+        });
+    }
+    /*
+     * This function checks for collision between 2 entities, checking the
+     * underlying rectangle for each entity
+     *
+     */
+    function checkCollisionEntity(entity1, entity2) {
+	
+	var collision = false;
+	// First determine the distance vector between two entities.  This
+	// will be the difference between center points of each
+	// entity
+	//
+	var distanceX = Math.abs(Math.round(entity1.centerX()) - Math.round(entity2.centerX()));
+	var distanceY = Math.abs(Math.round(entity1.centerY()) - Math.round(entity2.centerY()));
+	//
+	// Check for collison on X axis.   If the sum of the half-width's of
+	// the entities is less than the X vector, then may be collision and
+	// need to check in the Y direction
+	//
+	if (distanceX < (entity1.width/2 + entity2.width/2)) {
+	    // Collision may be occurring.  Check in Y direction
+	    if (distanceY < (entity1.height/2 + entity2.height/2)) {
+		collision = true;
+	    }
+	}
+	return collision;
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -172,7 +263,7 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-princess-girl.png'
     ]);
     Resources.onReady(init);
 
