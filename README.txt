@@ -1,7 +1,8 @@
+
 To start the game, open the index.html with your preferred browser, Firefox
 or Chrome preferred.
 
-Imediately, you should see your "princess" player at the bottom of the screen
+Immediately, you should see your "princess" player at the bottom of the screen
 and enemy bugs moving from left to right.   The goal is to move the princess
 using the arrow keys to the water.   Each press of the arrow key will move it
 one block.  When the player reaches the water or collides with a bug enemy,
@@ -16,5 +17,5 @@ display whether the player won or loss, but the coaches said it did not meet
 the rubric so I removed it.
 
 
-I do show a zero score in right hand corner.   I planned to use it when I
+I did show a zero score in right hand corner.   I planned to use it when I
 add jewels that the player can take,
